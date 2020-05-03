@@ -1,0 +1,17 @@
+#!/bin/bash
+g++ -std=c++11 -o encryptionTest encryptionTest.cpp -lcrypto
+g++ -o find-average findAverage.cpp
+g++ -o sizeFile sizeFile.cpp
+for((COUNTER = 256; COUNTER <= 16384; COUNTER = $COUNTER * 2))
+do
+        ./sizeFile "testFile" $COUNTER
+        echo $COUNTER "kib:"
+        touch result.txt
+        for((COUNTER2 = 1; COUNTER2 <= 5; COUNTER2++))
+        do
+                ./encryptionTest "testFile" >> result.txt
+        done
+        ./find-average
+	rm result.txt
+done
+echo done
